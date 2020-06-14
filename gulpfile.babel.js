@@ -44,7 +44,7 @@ const clean = () => del(['./build']);
 const scripts = () => {
     return gulp.src(paths.scripts.src, {sourcemaps: true})
         .pipe(plumber())
-        .pipe(babel())
+        //.pipe(babel())
         .pipe(uglify())
         .pipe(concat('main.min.js'))
         .pipe(gulp.dest(paths.scripts.dest));
