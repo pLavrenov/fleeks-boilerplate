@@ -13,13 +13,15 @@ import del from 'del';
 const server = browserSync.create();
 
 const paths = {
+    scripts: {
+        src: [
+            'src/js/main.js'
+        ],
+        dest: 'build/js/'
+    },
     styles: {
         src: ['src/sass/*.scss', '!src/sass/_*.ejs'],
         dest: 'build/css/'
-    },
-    scripts: {
-        src: 'src/js/main.js',
-        dest: 'build/js/'
     },
     images: {
         src: 'src/images/**/*.{png,jpg,gif,svg}',
