@@ -8,6 +8,7 @@ import imagemin from 'gulp-imagemin';
 import plumber from 'gulp-plumber';
 import ejs from 'gulp-ejs';
 import rename from 'gulp-rename';
+import sass from 'gulp-sass';
 import del from 'del';
 
 const server = browserSync.create();
@@ -52,8 +53,8 @@ const scripts = () => {
 const styles = () => {
     return gulp.src(paths.styles.src)
         .pipe(plumber())
+        .pipe(sass().on('error', sass.logError))
         .pipe(pleeease({
-            sass: true,
             out: 'main.min.css',
         }))
         .pipe(gulp.dest(paths.styles.dest));
