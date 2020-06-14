@@ -17,11 +17,11 @@ A simple set of tools for front-end development
 
 # Templates
 
-Rin supports [EJS](http://www.embeddedjs.com/) template. When you edit and save `.ejs` files under `src/templates/pages`, they will output as `.html` to `build/` directory.
+Boilerplate supports [EJS](http://www.embeddedjs.com/) template. When you edit and save `.ejs` files under `src/templates/pages`, they will output as `.html` to `build/` directory.
 
 # Local Server
 
-Rin runs local server by using [BrowserSync](https://www.browsersync.io/). Its default URL is <http://localhost:3000/>. It reloads your browser automatically when you update a file.
+Boilerplate runs local server by using [BrowserSync](https://www.browsersync.io/). Its default URL is <http://localhost:3000/>. It reloads your browser automatically when you update a file.
 
 # Deploy to gh-pages branch
 
