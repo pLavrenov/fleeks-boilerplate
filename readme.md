@@ -11,7 +11,7 @@ A simple set of tools for front-end development
     $ cd fleeks-boilerplate
     $ npm install
 
-#### 3) Run gulp:
+#### 2) Run gulp:
 
     $ gulp
 
