@@ -2,7 +2,6 @@ import gulp from 'gulp';
 import concat from 'gulp-concat';
 import uglify from 'gulp-uglify-es';
 import browserSync from 'browser-sync';
-import babel from 'gulp-babel';
 import pleeease from 'gulp-pleeease';
 import imagemin from 'gulp-imagemin';
 import plumber from 'gulp-plumber';
@@ -10,12 +9,16 @@ import ejs from 'gulp-ejs';
 import rename from 'gulp-rename';
 import sass from 'gulp-sass';
 import del from 'del';
+import Pageres from 'pageres';
+//import spritesmith from 'gulp.spritesmith';
+//import gulpif from 'gulp-if';
 
 const server = browserSync.create();
 
 const paths = {
     scripts: {
         src: [
+            // Add own scripts
             'src/js/main.js'
         ],
         dest: 'build/js/'
@@ -35,14 +38,16 @@ const paths = {
     templates: {
         src: ['src/templates/*.ejs', '!src/templates/_*.ejs'],
         dest: 'build/'
-    }
+    },
 };
 
 // Tasks
-const clean = () => del(['./build']);
+const clean = () => del(['build']);
 
 const scripts = () => {
-    return gulp.src(paths.scripts.src, {sourcemaps: true})
+    return gulp.src(paths.scripts.src, {
+            sourcemaps: true
+        })
         .pipe(plumber())
         //.pipe(babel())
         .pipe(uglify())
@@ -97,6 +102,34 @@ const serve = (done) => {
     done();
 };
 
+// const sprites = () => {
+//     return gulp.src('src/images/sprite/*.png')
+//         .pipe(spritesmith({
+//             imgName: 'icons.png',
+//             imgPath: '../images/icons.png',
+//             cssName: '_sprite.scss',
+//             cssFormat: 'sass',
+//         }))
+//         .pipe(gulpif('*.png', gulp.dest('build/images/')))
+//         .pipe(gulpif('*.scss', gulp.dest('src/sass/')));
+// };
+
+const screenshot = async (done) => {
+    await new Pageres({
+        delay: 2,
+        filename: 'screenshot',
+        format: 'png',
+        crop: true,
+    })
+        .src(
+            './build/home.html',
+            ['1420x900'],
+        )
+        .dest(__dirname)
+        .run();
+    done();
+};
+
 const watch = () => {
     gulp.watch(paths.scripts.src, gulp.series([scripts], reload));
     gulp.watch(paths.styles.src, gulp.series([styles], reload));
@@ -105,7 +138,20 @@ const watch = () => {
     gulp.watch(paths.templates.src, gulp.series([templates], reload));
 };
 
-const dev = gulp.series(clean, scripts, styles, images, fonts, templates, serve, watch);
+const builder = gulp.series(scripts, images, styles, fonts, templates);
+
+const build = gulp.series(clean, builder, screenshot);
+
+const dev = gulp.series(clean, builder, serve, watch);
+
+exports.clean = clean;
+exports.templates = templates;
+exports.scripts = scripts;
+exports.styles = styles;
+exports.images = images;
+exports.fonts = fonts;
+exports.screenshot = screenshot;
+exports.build = build;
 
 export default dev;
 

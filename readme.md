@@ -1,3 +1,5 @@
+![GitHub Logo](./screenshot.png)
+
 # Fleeks - Html Boilerplate (Sass, Ejs, Gulp 4)
 
 A simple set of tools for front-end development
