@@ -2,7 +2,6 @@ import gulp from 'gulp';
 import concat from 'gulp-concat';
 import uglify from 'gulp-uglify-es';
 import browserSync from 'browser-sync';
-import pleeease from 'gulp-pleeease';
 import imagemin from 'gulp-imagemin';
 import plumber from 'gulp-plumber';
 import ejs from 'gulp-ejs';
@@ -10,6 +9,7 @@ import rename from 'gulp-rename';
 import sass from 'gulp-sass';
 import del from 'del';
 import Pageres from 'pageres';
+import sourcemaps from 'gulp-sourcemaps';
 //import spritesmith from 'gulp.spritesmith';
 //import gulpif from 'gulp-if';
 
@@ -24,7 +24,10 @@ const paths = {
         dest: 'build/js/'
     },
     styles: {
-        src: ['src/sass/*.scss', '!src/sass/_*.ejs'],
+        src: [
+            // Add own css
+            'src/sass/*.scss'
+        ],
         dest: 'build/css/'
     },
     images: {
@@ -45,23 +48,25 @@ const paths = {
 const clean = () => del(['build']);
 
 const scripts = () => {
-    return gulp.src(paths.scripts.src, {
-            sourcemaps: true
-        })
+    return gulp.src(paths.scripts.src)
         .pipe(plumber())
+        .pipe(concat('main.min.js'))
+        .pipe(sourcemaps.init())
         //.pipe(babel())
         .pipe(uglify())
-        .pipe(concat('main.min.js'))
+        .pipe(sourcemaps.write(''))
         .pipe(gulp.dest(paths.scripts.dest));
 };
 
 const styles = () => {
     return gulp.src(paths.styles.src)
         .pipe(plumber())
-        .pipe(sass().on('error', sass.logError))
-        .pipe(pleeease({
-            out: 'main.min.css',
-        }))
+        .pipe(concat('main.min.css'))
+        .pipe(sourcemaps.init())
+        .pipe(sass({
+            outputStyle: 'compressed',
+        }).on('error', sass.logError))
+        .pipe(sourcemaps.write(''))
         .pipe(gulp.dest(paths.styles.dest));
 };
 
