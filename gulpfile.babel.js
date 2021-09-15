@@ -6,12 +6,14 @@ import imagemin from 'gulp-imagemin';
 import plumber from 'gulp-plumber';
 import ejs from 'gulp-ejs';
 import rename from 'gulp-rename';
-import sass from 'gulp-sass';
+//import sass from 'gulp-sass';
 import del from 'del';
 import Pageres from 'pageres';
 import sourcemaps from 'gulp-sourcemaps';
 //import spritesmith from 'gulp.spritesmith';
 //import gulpif from 'gulp-if';
+
+const sass = require('gulp-sass')(require('sass'));
 
 const server = browserSync.create();
 
@@ -19,14 +21,22 @@ const paths = {
     scripts: {
         src: [
             // Add own scripts
+            'src/js/jquery/jquery.min.js',
+            'src/js/aos/aos.js',
+            'src/js/fancybox/fancybox.js',
+            'src/js/slick/slick.js',
+            'src/js/parallax/parallax.js',
             'src/js/main.js'
         ],
         dest: 'build/js/'
     },
     styles: {
+        watch: [
+            'src/sass/**/*.scss',
+        ],
         src: [
             // Add own css
-            'src/sass/*.scss'
+            'src/sass/*.scss',
         ],
         dest: 'build/css/'
     },
@@ -39,6 +49,9 @@ const paths = {
         dest: 'build/fonts/'
     },
     templates: {
+        watch: [
+            'src/templates/**/*.ejs',
+        ],
         src: ['src/templates/*.ejs', '!src/templates/_*.ejs'],
         dest: 'build/'
     },
@@ -137,10 +150,10 @@ const screenshot = async (done) => {
 
 const watch = () => {
     gulp.watch(paths.scripts.src, gulp.series([scripts], reload));
-    gulp.watch(paths.styles.src, gulp.series([styles], reload));
+    gulp.watch(paths.styles.watch, gulp.series([styles], reload));
     gulp.watch(paths.images.src, gulp.series([images], reload));
     gulp.watch(paths.fonts.src, gulp.series([fonts], reload));
-    gulp.watch(paths.templates.src, gulp.series([templates], reload));
+    gulp.watch(paths.templates.watch, gulp.series([templates], reload));
 };
 
 const builder = gulp.series(scripts, images, styles, fonts, templates);
