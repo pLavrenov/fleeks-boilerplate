@@ -21,11 +21,11 @@ const paths = {
     scripts: {
         src: [
             // Add own scripts
-            'src/js/jquery/jquery.min.js',
-            'src/js/aos/aos.js',
-            'src/js/fancybox/fancybox.js',
-            'src/js/slick/slick.js',
-            'src/js/parallax/parallax.js',
+            //'src/js/jquery/jquery.min.js',
+            //'src/js/aos/aos.js',
+            //'src/js/fancybox/fancybox.js',
+            //'src/js/slick/slick.js',
+            //'src/js/parallax/parallax.js',
             'src/js/main.js'
         ],
         dest: 'build/js/'
