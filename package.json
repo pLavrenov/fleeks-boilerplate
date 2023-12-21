@@ -1,6 +1,6 @@
 {
   "name": "fleeks-boilerplate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Lean HTML & SASS Boilerplate",
   "author": "pLavrenov",
   "license": "MIT",
@@ -22,7 +22,6 @@
     "gulp-if": "^3.0.0",
     "gulp-imagemin": "^7.1.0",
     "gulp-perfect-pixel": "^0.4.2",
-    "gulp-pleeease": "^2.0.2",
     "gulp-plumber": "^1.2.1",
     "gulp-rename": "^2.0.0",
     "gulp-sass": "^5.0.0",
